@@ -1,8 +1,6 @@
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -14,15 +12,12 @@ import javafx.scene.text.TextAlignment;
 public class MainMenu {
     private final Scene scene;
     private final TilePane root;
-    private final HBox firstRow = new HBox(10);
-    private final HBox sndRow = new HBox(10);
-    private final HBox thirdRow = new HBox(10);
-    private final VBox vBox = new VBox(10);
 
     public MainMenu(Scene scene, int SIZE) {
         this.scene = scene;
         root = new TilePane();
 
+        ReactionTimeGame reactionTimeGame = new ReactionTimeGame(scene, SIZE, root);
         Rectangle reactionTimeRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
         reactionTimeRect.setFill(Color.LIGHTBLUE);
         StackPane reactionTimePane = new StackPane();
@@ -30,6 +25,7 @@ public class MainMenu {
         reactionTime.setWrapText(true);
         reactionTime.setTextAlignment(TextAlignment.CENTER);
         reactionTime.setPrefSize(SIZE / 7, SIZE / 7);
+        reactionTime.setOnAction(event -> reactionTimeGame.show());
         Text reactionTimeDesc = new Text("Test your visual and " +
                 "physical reflexes.");
         reactionTimeDesc.setWrappingWidth(SIZE / 5);
