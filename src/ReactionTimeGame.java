@@ -37,7 +37,9 @@ public class ReactionTimeGame {
         rect.setOnMouseClicked(event -> {gameLoop(rect, reactionSpeed);});
 
         Button backButton = new Button("Back to Main Menu");
-        backButton.setOnAction(event -> { scene.setRoot(mainMenu); });
+        backButton.setOnAction(event -> {
+            scene.setRoot(mainMenu);
+        });
         vBox.getChildren().addAll(reactionTimeTitle, gameDesc, rect, backButton);
         vBox.setAlignment(Pos.CENTER);
         root.setCenter(vBox);
@@ -46,16 +48,19 @@ public class ReactionTimeGame {
         rect.setFill(Color.RED);
         long rand = ThreadLocalRandom.current().nextLong(10, 30);
         long delayTimer = (long) (rand * Math.pow(10, 13));
+        System.out.println(delayTimer);
         AnimationTimer animationTimer = new AnimationTimer() {
             long lastUpdate = 0;
             @Override
             public void handle(long now) {
+                System.out.println(now);
                 if(now - lastUpdate >= delayTimer) {
                     rect.setFill(Color.BLUE);
                     lastUpdate = now;
                 }
             }
         };
+        animationTimer.start();
     }
     public void show() { scene.setRoot(root); }
 }

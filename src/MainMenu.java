@@ -17,7 +17,6 @@ public class MainMenu {
         this.scene = scene;
         root = new TilePane();
 
-        ReactionTimeGame reactionTimeGame = new ReactionTimeGame(scene, SIZE, root);
         Rectangle reactionTimeRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
         reactionTimeRect.setFill(Color.LIGHTBLUE);
         StackPane reactionTimePane = new StackPane();
@@ -25,7 +24,10 @@ public class MainMenu {
         reactionTime.setWrapText(true);
         reactionTime.setTextAlignment(TextAlignment.CENTER);
         reactionTime.setPrefSize(SIZE / 7, SIZE / 7);
-        reactionTime.setOnAction(event -> reactionTimeGame.show());
+        reactionTime.setOnAction(event -> {
+            ReactionTimeGame reactionTimeGame = new ReactionTimeGame(scene, SIZE, root);
+            reactionTimeGame.show();
+        });
         Text reactionTimeDesc = new Text("Test your visual and " +
                 "physical reflexes.");
         reactionTimeDesc.setWrappingWidth(SIZE / 5);
@@ -42,6 +44,10 @@ public class MainMenu {
         sequenceMemory.setWrapText(true);
         sequenceMemory.setTextAlignment(TextAlignment.CENTER);
         sequenceMemory.setPrefSize(SIZE / 7, SIZE / 7);
+        sequenceMemory.setOnAction(event -> {
+            SequenceMemoryGame sequenceMemoryGame = new SequenceMemoryGame(scene, SIZE, root);
+            sequenceMemoryGame.show();
+        });
         Text sequenceMemoryDesc = new Text("Remember an increasing " +
                 "pattern of button presses.");
         sequenceMemoryDesc.setWrappingWidth(SIZE / 5);
@@ -58,6 +64,10 @@ public class MainMenu {
         aimTrainer.setWrapText(true);
         aimTrainer.setTextAlignment(TextAlignment.CENTER);
         aimTrainer.setPrefSize(SIZE / 7, SIZE / 7);
+        aimTrainer.setOnAction(event -> {
+            AimTrainerGame aimTrainerGame = new AimTrainerGame(scene, SIZE, root);
+            aimTrainerGame.show();
+        });
         Text aimTrainerDesc = new Text("How quickly can you hit all the targets?");
         aimTrainerDesc.setWrappingWidth(SIZE / 5);
         VBox aimTrainerVbox = new VBox(10);
@@ -73,6 +83,10 @@ public class MainMenu {
         numberMemory.setWrapText(true);
         numberMemory.setTextAlignment(TextAlignment.CENTER);
         numberMemory.setPrefSize(SIZE / 7, SIZE / 7);
+        numberMemory.setOnAction(event -> {
+            NumberMemoryGame numberMemoryGame = new NumberMemoryGame(scene, SIZE, root);
+            numberMemoryGame.show();
+        });
         Text numberMemoryDesc = new Text("Remember the longest number" +
                 " you can.");
         numberMemoryDesc.setWrappingWidth(SIZE / 5);
@@ -90,6 +104,10 @@ public class MainMenu {
         verbalMemory.setWrapText(true);
         verbalMemory.setTextAlignment(TextAlignment.CENTER);
         verbalMemory.setPrefSize(SIZE / 7, SIZE / 7);
+        verbalMemory.setOnAction(event -> {
+            VerbalMemoryGame verbalMemoryGame = new VerbalMemoryGame(scene, SIZE, root);
+            verbalMemoryGame.show();
+        });
         Text verbalMemoryDesc = new Text("Keep as many words in memory " +
                 "as possible.");
         verbalMemoryDesc.setWrappingWidth(SIZE / 5);
@@ -106,6 +124,10 @@ public class MainMenu {
         chimpTest.setWrapText(true);
         chimpTest.setTextAlignment(TextAlignment.CENTER);
         chimpTest.setPrefSize(SIZE / 7, SIZE / 7);
+        chimpTest.setOnAction(event -> {
+            ChimpTestGame chimpTestGame = new ChimpTestGame(scene, SIZE, root);
+            chimpTestGame.show();
+        });
         Text chimpTestDesc = new Text("Are you smarter than a chimpanzee?");
         chimpTestDesc.setWrappingWidth(SIZE / 5);
         VBox chimpTestVbox = new VBox(10);
@@ -121,6 +143,10 @@ public class MainMenu {
         visualMemory.setWrapText(true);
         visualMemory.setTextAlignment(TextAlignment.CENTER);
         visualMemory.setPrefSize(SIZE / 7, SIZE / 7);
+        visualMemory.setOnAction(event -> {
+            VisualMemoryGame visualMemoryGame = new VisualMemoryGame(scene, SIZE, root);
+            visualMemoryGame.show();
+        });
         Text visualMemoryDesc = new Text("Remember an increasingly large" +
                 " board of squares.");
         visualMemoryDesc.setWrappingWidth(SIZE / 5);
@@ -137,6 +163,10 @@ public class MainMenu {
         typing.setWrapText(true);
         typing.setTextAlignment(TextAlignment.CENTER);
         typing.setPrefSize(SIZE / 7, SIZE / 7);
+        typing.setOnAction(event -> {
+            TypingGame typingGame = new TypingGame(scene, SIZE, root);
+            typingGame.show();
+        });
         Text typingDesc = new Text("How many words per minute can you type?");
         typingDesc.setWrappingWidth(SIZE / 5);
         VBox typingVbox = new VBox(10);
@@ -145,20 +175,25 @@ public class MainMenu {
         typingPane.getChildren().addAll(typingRect, typingVbox);
         root.getChildren().add(typingPane);
 
-        Rectangle wowTriviaRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
-        wowTriviaRect.setFill(Color.LIGHTBLUE);
-        StackPane wowTriviaPane = new StackPane();
-        Button wowTrivia = new Button("World of Warcraft Trivia");
-        wowTrivia.setWrapText(true);
-        wowTrivia.setTextAlignment(TextAlignment.CENTER);
-        wowTrivia.setPrefSize(SIZE / 7, SIZE / 7);
-        Text wowTriviaDesc = new Text("Test your World of Warcraft knowledge!");
-        wowTriviaDesc.setWrappingWidth(SIZE / 5);
-        VBox wowTriviaVbox = new VBox(10);
-        wowTriviaVbox.getChildren().addAll(wowTrivia, wowTriviaDesc);
-        wowTriviaVbox.setAlignment(Pos.CENTER);
-        wowTriviaPane.getChildren().addAll(wowTriviaRect, wowTriviaVbox);
-        root.getChildren().add(wowTriviaPane);
+        Rectangle mathSolverRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
+        mathSolverRect.setFill(Color.LIGHTBLUE);
+        StackPane mathSolverPane = new StackPane();
+        Button mathSolver = new Button("Math Solver");
+        mathSolver.setWrapText(true);
+        mathSolver.setTextAlignment(TextAlignment.CENTER);
+        mathSolver.setPrefSize(SIZE / 7, SIZE / 7);
+        mathSolver.setOnAction(event -> {
+            MathSolverGame mathSolverGame = new MathSolverGame(scene, SIZE, root);
+            mathSolverGame.show();
+        });
+        Text mathSolverDesc = new Text("With increasing numbers how many " +
+                "equations can you solve?");
+        mathSolverDesc.setWrappingWidth(SIZE / 5);
+        VBox mathSolverVbox = new VBox(10);
+        mathSolverVbox.getChildren().addAll(mathSolver, mathSolverDesc);
+        mathSolverVbox.setAlignment(Pos.CENTER);
+        mathSolverPane.getChildren().addAll(mathSolverRect, mathSolverVbox);
+        root.getChildren().add(mathSolverPane);
 
         root.setAlignment(Pos.CENTER);
         root.setHgap(10);
