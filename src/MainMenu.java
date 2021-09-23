@@ -84,7 +84,7 @@ public class MainMenu {
         numberMemory.setTextAlignment(TextAlignment.CENTER);
         numberMemory.setPrefSize(SIZE / 7, SIZE / 7);
         numberMemory.setOnAction(event -> {
-            NumberMemoryGame numberMemoryGame = new NumberMemoryGame(scene, SIZE, root);
+            NumberMemoryGame numberMemoryGame = new NumberMemoryGame(scene, root);
             numberMemoryGame.show();
         });
         Text numberMemoryDesc = new Text("Remember the longest number" +

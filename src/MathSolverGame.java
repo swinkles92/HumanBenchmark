@@ -107,39 +107,43 @@ public class MathSolverGame {
             case "+":
                 if(x + y == answer) {
                     score++;
-                    scoreLabel.setText(Integer.toString(score));
+                    scoreLabel.setText("Score: " + score);
                 }
                 else {
                     lives--;
-                    livesLabel.setText(Integer.toString(lives));
+                    livesLabel.setText("Lives: " + lives);
                 }
+                break;
             case "-":
                 if(x - y == answer) {
                     score++;
-                    scoreLabel.setText(Integer.toString(score));
+                    scoreLabel.setText("Score: " + score);
                 }
                 else {
                     lives--;
-                    livesLabel.setText(Integer.toString(lives));
+                    livesLabel.setText("Lives: " + lives);
                 }
+                break;
             case "/":
                 if(x / y == answer) {
                     score++;
-                    scoreLabel.setText(Integer.toString(score));
+                    scoreLabel.setText("Score: " + score);
                 }
                 else {
                     lives--;
-                    livesLabel.setText(Integer.toString(lives));
+                    livesLabel.setText("Lives: " + lives);
                 }
+                break;
             case "*":
                 if(x * y == answer) {
                     score++;
-                    scoreLabel.setText(Integer.toString(score));
+                    scoreLabel.setText("Score: " + score);
                 }
                 else {
                     lives--;
-                    livesLabel.setText(Integer.toString(lives));
+                    livesLabel.setText("Lives: " + lives);
                 }
+                break;
         }
     }
     public void show() { scene.setRoot(root); }

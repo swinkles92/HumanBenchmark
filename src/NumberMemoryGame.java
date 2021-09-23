@@ -1,3 +1,6 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,6 +11,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -18,7 +22,7 @@ public class NumberMemoryGame {
     private int currPow10 = 0;
     private int currNum;
 
-    public NumberMemoryGame(Scene scene, int SIZE, TilePane mainMenu) {
+    public NumberMemoryGame(Scene scene, TilePane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
         gameScreen = new BorderPane();
@@ -38,9 +42,6 @@ public class NumberMemoryGame {
             scene.setRoot(mainMenu);
         });
         Button startButton = new Button("Start");
-        startButton.setOnAction(event -> {
-            scene.setRoot(gameScreen);
-        });
 
         startVBox.getChildren().addAll(numberMemoryTitle, gameDesc,
                 startButton, backButton);
@@ -56,12 +57,17 @@ public class NumberMemoryGame {
         Button submitBtn = new Button("Submit");
         submitBtn.setOnAction(event -> {
             currNum = gameLoop(numberLabel, currNum,
-                    Integer.parseInt(textField.getText().toString()));
+                    Integer.parseInt(textField.getText()));
+            textField.clear();
         });
-        gameVBox.getChildren().addAll(numberLabel, textField,
-                submitBtn, backButton);
+        gameVBox.getChildren().addAll( numberLabel, textField, submitBtn, backButton);
         gameVBox.setAlignment(Pos.CENTER);
         gameScreen.setCenter(gameVBox);
+        startButton.setOnAction(event -> {
+            scene.setRoot(gameScreen);
+            currNum = gameLoop(numberLabel, 0, 0);
+        });
+
     }
     public int generateNum() {
         return ThreadLocalRandom.current().nextInt(
@@ -70,9 +76,14 @@ public class NumberMemoryGame {
     }
     public int gameLoop(Label numberLabel, int currNum, int userInput) {
         if(currNum == userInput) {
-            currPow10++;
             currNum = generateNum();
             numberLabel.setText(Integer.toString(currNum));
+            Timeline t = new Timeline(
+                    new KeyFrame(Duration.seconds(0), new KeyValue(numberLabel.opacityProperty(), 100)),
+                    new KeyFrame(Duration.seconds(2), new KeyValue(numberLabel.opacityProperty(), 0))
+            );
+            t.play();
+            currPow10++;
         }
         else numberLabel.setText("Game Over!");
         return currNum;

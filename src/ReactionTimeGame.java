@@ -1,4 +1,6 @@
-import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -46,21 +49,12 @@ public class ReactionTimeGame {
     }
     public void gameLoop(Rectangle rect, Label reactionSpeed) {
         rect.setFill(Color.RED);
-        long rand = ThreadLocalRandom.current().nextLong(10, 30);
-        long delayTimer = (long) (rand * Math.pow(10, 13));
-        System.out.println(delayTimer);
-        AnimationTimer animationTimer = new AnimationTimer() {
-            long lastUpdate = 0;
-            @Override
-            public void handle(long now) {
-                System.out.println(now);
-                if(now - lastUpdate >= delayTimer) {
-                    rect.setFill(Color.BLUE);
-                    lastUpdate = now;
-                }
-            }
-        };
-        animationTimer.start();
+        int rand = ThreadLocalRandom.current().nextInt(1, 4);
+        Timeline t = new Timeline(
+            new KeyFrame(Duration.seconds(0), new KeyValue(rect.fillProperty(), Color.RED)),
+            new KeyFrame(Duration.seconds(rand), new KeyValue(rect.fillProperty(), Color.GREEN))
+        );
+        t.play();
     }
     public void show() { scene.setRoot(root); }
 }
