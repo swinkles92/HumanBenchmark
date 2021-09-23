@@ -3,8 +3,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -31,7 +35,25 @@ public class AimTrainerGame {
             scene.setRoot(mainMenu);
         });
 
-        vBox.getChildren().addAll(aimTrainerTitle, gameDesc, backButton);
+        StackPane targetPane = new StackPane();
+        Circle outer = new Circle(SIZE/10, SIZE/10, SIZE/10);
+        outer.setFill(Color.RED);
+        targetPane.getChildren().add(outer);
+        Circle middle1 = new Circle(SIZE/12, SIZE/12, SIZE/12);
+        middle1.setFill(Color.GHOSTWHITE);
+        targetPane.getChildren().add(middle1);
+        Circle middle2 = new Circle(SIZE/14, SIZE/14, SIZE/14);
+        middle2.setFill(Color.RED);
+        targetPane.getChildren().add(middle2);
+        Circle middle3 = new Circle(SIZE/18, SIZE/18, SIZE/18);
+        middle3.setFill(Color.GHOSTWHITE);
+        targetPane.getChildren().add(middle3);
+        Circle inner = new Circle(SIZE/20, SIZE/20, SIZE/20);
+        inner.setFill(Color.RED);
+        targetPane.getChildren().add(inner);
+
+        vBox.getChildren().addAll(aimTrainerTitle, gameDesc,
+                targetPane, backButton);
         vBox.setAlignment(Pos.CENTER);
 
         root.setCenter(vBox);
