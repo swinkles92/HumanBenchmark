@@ -105,7 +105,7 @@ public class MainMenu {
         verbalMemory.setTextAlignment(TextAlignment.CENTER);
         verbalMemory.setPrefSize(SIZE / 7, SIZE / 7);
         verbalMemory.setOnAction(event -> {
-            VerbalMemoryGame verbalMemoryGame = new VerbalMemoryGame(scene, SIZE, root);
+            VerbalMemoryGame verbalMemoryGame = new VerbalMemoryGame(scene, root);
             verbalMemoryGame.show();
         });
         Text verbalMemoryDesc = new Text("Keep as many words in memory " +
