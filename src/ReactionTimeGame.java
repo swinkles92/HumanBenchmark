@@ -13,13 +13,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 
 public class ReactionTimeGame {
     private final Scene scene;
     private BorderPane root;
+    private long reactionTime;
 
     public ReactionTimeGame(Scene scene, int SIZE, TilePane mainMenu) {
         this.scene = scene;
@@ -30,31 +30,47 @@ public class ReactionTimeGame {
         reactionTimeTitle.setFont(new Font(40));
         reactionTimeTitle.setAlignment(Pos.CENTER);
         Text gameDesc = new Text("When the red box turns green, click it " +
-                "as quickly as you can. Clicking the box will begin the game.");
+                "as quickly as you can. Click Start to begin.");
         gameDesc.setFont(new Font(20));
         gameDesc.setWrappingWidth(225);
 
-        Label reactionSpeed = new Label();
+        Label reactionTimeLabel = new Label();
         Rectangle rect = new Rectangle(SIZE / 2, SIZE / 2);
         rect.setFill(Color.GREEN);
-        rect.setOnMouseClicked(event -> {gameLoop(rect, reactionSpeed);});
+
+        Button startButton = new Button("Start");
+        startButton.setOnAction(event -> {
+            reactionTimeLabel.setText("");
+            long startTime = gameLoop(rect);
+            rect.setOnMouseClicked(event1 -> {
+                if(rect.getFill() == Color.GREEN) {
+                    reactionTime = System.currentTimeMillis() - startTime;
+                    reactionTimeLabel.setText("Your time: " + reactionTime + " ms");
+                }
+                else reactionTimeLabel.setText("Too early!");
+            });
+        });
 
         Button backButton = new Button("Back to Main Menu");
         backButton.setOnAction(event -> {
             scene.setRoot(mainMenu);
         });
-        vBox.getChildren().addAll(reactionTimeTitle, gameDesc, rect, backButton);
+        vBox.getChildren().addAll(reactionTimeTitle, gameDesc, reactionTimeLabel,
+                rect, startButton, backButton);
         vBox.setAlignment(Pos.CENTER);
         root.setCenter(vBox);
     }
-    public void gameLoop(Rectangle rect, Label reactionSpeed) {
+    public long gameLoop(Rectangle rect) {
         rect.setFill(Color.RED);
         int rand = ThreadLocalRandom.current().nextInt(1, 4);
         Timeline t = new Timeline(
             new KeyFrame(Duration.seconds(0), new KeyValue(rect.fillProperty(), Color.RED)),
+            new KeyFrame(Duration.seconds(rand - 0.001), new KeyValue(rect.fillProperty(), Color.RED)),
             new KeyFrame(Duration.seconds(rand), new KeyValue(rect.fillProperty(), Color.GREEN))
         );
         t.play();
+        long clickTime = System.currentTimeMillis();
+        return clickTime;
     }
     public void show() { scene.setRoot(root); }
 }
