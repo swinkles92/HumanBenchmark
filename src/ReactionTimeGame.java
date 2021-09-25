@@ -40,14 +40,20 @@ public class ReactionTimeGame {
 
         Button startButton = new Button("Start");
         startButton.setOnAction(event -> {
+            reactionTime = 0;
             reactionTimeLabel.setText("");
             long startTime = gameLoop(rect);
             rect.setOnMouseClicked(event1 -> {
                 if(rect.getFill() == Color.GREEN) {
-                    reactionTime = System.currentTimeMillis() - startTime;
-                    reactionTimeLabel.setText("Your time: " + reactionTime + " ms");
+                    if(reactionTime == 0) {
+                        reactionTime = System.currentTimeMillis() - startTime;
+                        reactionTimeLabel.setText("Your time: " + reactionTime + " ms");
+                    }
                 }
-                else reactionTimeLabel.setText("Too early!");
+                else {
+                    reactionTimeLabel.setText("Too early!");
+                    reactionTime = -1;
+                }
             });
         });
 
