@@ -71,9 +71,9 @@ public class VisualMemoryGame {
         gameBoard.setVgap(2.5);
         gameBoard.setHgap(2.5);
         gameBoard.setMaxWidth(SIZE / 2);
-        for(int i = 0; i < 9; i++) {
+        for(int i = 0; i < 20; i++) {
             int counter = i;
-            Rectangle rect = new Rectangle(SIZE / 6.5, SIZE / 6.5);
+            Rectangle rect = new Rectangle(SIZE / 10, SIZE / 10);
             rect.setFill(Color.DIMGREY);
             rect.setOnMouseClicked(event -> {
                 if(!gameSequence.isEmpty()) {
@@ -125,10 +125,10 @@ public class VisualMemoryGame {
     public void generateSequence() {
         int rand;
         for(int i = 0; i < score + 1; i++) {
-            rand = ThreadLocalRandom.current().nextInt(0,9);
+            rand = ThreadLocalRandom.current().nextInt(0,20);
             if(gameSequence.contains(rand)) {
                 while(gameSequence.contains(rand)) {
-                    rand = ThreadLocalRandom.current().nextInt(0,9);
+                    rand = ThreadLocalRandom.current().nextInt(0,20);
                 }
                 gameSequence.push(rand);
             }
