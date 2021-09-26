@@ -73,10 +73,10 @@ public class ChimpTestGame {
         gameBoard.setVgap(2.5);
         gameBoard.setHgap(2.5);
         gameBoard.setMaxWidth(SIZE / 2);
-        for(int i = 0; i < 9; i++) {
+        for(int i = 0; i < 18; i++) {
             StackPane stackPane = new StackPane();
             int counter = i;
-            Rectangle rect = new Rectangle(SIZE / 6.5, SIZE / 6.5);
+            Rectangle rect = new Rectangle(SIZE / 8.15, SIZE / 8.15);
             rect.setFill(Color.DIMGREY);
             rect.setOnMouseClicked(event -> {
                 if(!gameSequence.isEmpty()) {
@@ -116,7 +116,7 @@ public class ChimpTestGame {
         Timeline t = new Timeline(
                 new KeyFrame(Duration.seconds(0),
                         new KeyValue(labelsList.get(curr).opacityProperty(), 100)),
-                new KeyFrame(Duration.seconds(3),
+                new KeyFrame(Duration.seconds(2),
                         new KeyValue(labelsList.get(curr).opacityProperty(), 0))
         );
         return t;
@@ -124,10 +124,10 @@ public class ChimpTestGame {
     public void generateSequence() {
         int rand;
         for(int i = 0; i < score + 1; i++) {
-            rand = ThreadLocalRandom.current().nextInt(0,9);
+            rand = ThreadLocalRandom.current().nextInt(0,18);
             if(gameSequence.contains(rand)) {
                 while(gameSequence.contains(rand)) {
-                    rand = ThreadLocalRandom.current().nextInt(0,9);
+                    rand = ThreadLocalRandom.current().nextInt(0,18);
                 }
                 gameSequence.push(rand);
             }
