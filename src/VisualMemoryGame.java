@@ -50,9 +50,17 @@ public class VisualMemoryGame {
 
         scoreLabel = new Label("Score: " + score);
         scoreLabel.setFont(new Font(40));
+        Button retryButton = new Button("Retry");
+        retryButton.setOnAction(event -> {
+            score = 0;
+            scoreLabel.setText("Score: " + score);
+            gameBoard = generateBoard(SIZE);
+            gameLoop();
+        });
         scoreLabel.setAlignment(Pos.CENTER);
         gameVBox.setAlignment(Pos.CENTER);
-        gameVBox.getChildren().addAll(scoreLabel, gameBoard, backButton);
+        gameVBox.getChildren().addAll(scoreLabel, gameBoard,
+                retryButton, backButton);
         gameScreen.setCenter(gameVBox);
 
 

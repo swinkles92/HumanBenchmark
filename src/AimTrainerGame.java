@@ -2,25 +2,26 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AimTrainerGame {
     private final Scene scene;
-    private final BorderPane root;
+    private final BorderPane startScreen;
+    private final Pane gameBoard;
+    private long timeElapsed;
+    private int counter;
 
     public AimTrainerGame(Scene scene, int SIZE, TilePane mainMenu) {
         this.scene = scene;
-        root = new BorderPane();
+        startScreen = new BorderPane();
+        gameBoard = new Pane();
 
-        VBox vBox = new VBox(10);
-
+        VBox startVBox = new VBox(10);
         Label aimTrainerTitle = new Label("Aim Trainer");
         aimTrainerTitle.setFont(new Font(40));
         aimTrainerTitle.setAlignment(Pos.CENTER);
@@ -28,13 +29,47 @@ public class AimTrainerGame {
                 "Click Start to begin.");
         gameDesc.setFont(new Font(20));
         gameDesc.setWrappingWidth(225);
-
         Button backButton = new Button("Back to Main Menu");
+        Button startButton = new Button("Start");
+        startVBox.getChildren().addAll(aimTrainerTitle, gameDesc,
+                startButton, backButton);
+        startVBox.setAlignment(Pos.CENTER);
+        startScreen.setCenter(startVBox);
+
+        HBox hBox = new HBox(15);
+        Button retryButton = new Button("Retry");
+        hBox.getChildren().addAll(retryButton, backButton);
+        hBox.setAlignment(Pos.CENTER);
+        hBox.relocate(SIZE / 2 - 100, 10);
+        gameBoard.getChildren().add(hBox);
+
+        startButton.setOnAction(event -> {
+            scene.setRoot(gameBoard);
+            timeElapsed = System.currentTimeMillis();
+            gameLoop(SIZE);
+        });
         backButton.setOnAction(event -> {
             scene.setRoot(mainMenu);
         });
-
+        retryButton.setOnAction(event -> {
+            timeElapsed = System.currentTimeMillis();
+            counter = 0;
+            gameBoard.getChildren().clear();
+            gameBoard.getChildren().add(hBox);
+            gameLoop(SIZE);
+        });
+    }
+    public void gameLoop(int SIZE) {
+        int x = ThreadLocalRandom.current().nextInt(50, SIZE - 150);
+        int y = ThreadLocalRandom.current().nextInt(100, SIZE - 150);
+        StackPane stackPane = generateTarget(SIZE);
+        stackPane.relocate(x, y);
+        System.out.println(counter);
+        gameBoard.getChildren().add(stackPane);
+    }
+    public StackPane generateTarget(int SIZE) {
         StackPane targetPane = new StackPane();
+
         Circle outer = new Circle(SIZE/10, SIZE/10, SIZE/10);
         outer.setFill(Color.RED);
         targetPane.getChildren().add(outer);
@@ -51,11 +86,24 @@ public class AimTrainerGame {
         inner.setFill(Color.RED);
         targetPane.getChildren().add(inner);
 
-        vBox.getChildren().addAll(aimTrainerTitle, gameDesc,
-                targetPane, backButton);
-        vBox.setAlignment(Pos.CENTER);
+        targetPane.setOnMouseClicked(event -> {
+            if(counter <= 30) {
+                counter++;
+                targetPane.setOpacity(0);
+                targetPane.setMouseTransparent(true);
+                gameLoop(SIZE);
+            }
+            else {
+                targetPane.setOpacity(0);
+                targetPane.setMouseTransparent(true);
+                timeElapsed = System.currentTimeMillis() - timeElapsed;
+                Label timeLabel = new Label("Your time: " + timeElapsed + " s");
+                timeLabel.relocate(SIZE / 2, SIZE / 2);
+                gameBoard.getChildren().add(timeLabel);
+            }
+        });
 
-        root.setCenter(vBox);
+        return targetPane;
     }
-    public void show() { scene.setRoot(root); }
+    public void show() { scene.setRoot(startScreen); }
 }
