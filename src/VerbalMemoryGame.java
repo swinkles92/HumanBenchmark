@@ -75,12 +75,22 @@ public class VerbalMemoryGame {
         seenButton.setOnAction(event -> {
             gameLoop(true);
         });
+        Button retryButton = new Button("Retry");
         gameHBox.getChildren().addAll(newButton, seenButton);
         gameHBox.setAlignment(Pos.CENTER);
-        gameVBox.getChildren().addAll(scoreLabel, currWordLabel, gameHBox, backButton);
+        gameVBox.getChildren().addAll(scoreLabel, currWordLabel, gameHBox,
+                retryButton, backButton);
         gameVBox.setAlignment(Pos.CENTER);
         gameScreen.setCenter(gameVBox);
 
+        retryButton.setOnAction(event -> {
+            score = 0;
+            scoreLabel.setText("Score: " + score);
+            seenWordsList.clear();
+            int rand = ThreadLocalRandom.current().nextInt(1, wordsList.size());
+            currWord = (String)wordsList.get(rand);
+            currWordLabel.setText(currWord);
+        });
     }
     public void gameLoop(boolean wordSeen) {
         int rand;

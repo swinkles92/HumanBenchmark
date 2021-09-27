@@ -20,6 +20,7 @@ public class ReactionTimeGame {
     private final Scene scene;
     private BorderPane root;
     private long reactionTime;
+    private long startTime;
 
     public ReactionTimeGame(Scene scene, int SIZE, TilePane mainMenu) {
         this.scene = scene;
@@ -38,11 +39,11 @@ public class ReactionTimeGame {
         Rectangle rect = new Rectangle(SIZE / 2, SIZE / 2);
         rect.setFill(Color.GREEN);
 
-        Button startButton = new Button("Start");
+        Button startButton = new Button("Start / Retry");
         startButton.setOnAction(event -> {
             reactionTime = 0;
             reactionTimeLabel.setText("");
-            long startTime = gameLoop(rect);
+            startTime = gameLoop(rect);
             rect.setOnMouseClicked(event1 -> {
                 if(rect.getFill() == Color.GREEN) {
                     if(reactionTime == 0) {
@@ -52,7 +53,8 @@ public class ReactionTimeGame {
                 }
                 else {
                     reactionTimeLabel.setText("Too early!");
-                    reactionTime = -1;
+                    reactionTime = 0;
+                    startTime = gameLoop(rect);
                 }
             });
         });

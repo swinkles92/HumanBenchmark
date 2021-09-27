@@ -38,12 +38,14 @@ public class TypingGame {
         startVBox.setAlignment(Pos.CENTER);
         startScreen.setCenter(startVBox);
 
+        Button retryButton = new Button("Retry");
         VBox gameVBox = new VBox(20);
         paragraphBox.setText(paragraph);
         paragraphBox.setFont(new Font(30));
         TextField userInputField = new TextField();
         userInputField.setMaxWidth(300);
-        gameVBox.getChildren().addAll(paragraphBox, userInputField, backButton);
+        gameVBox.getChildren().addAll(paragraphBox, userInputField,
+                retryButton, backButton);
         gameVBox.setAlignment(Pos.CENTER);
         gameScreen.setCenter(gameVBox);
         userInputField.setOnKeyReleased(event -> {
@@ -58,6 +60,11 @@ public class TypingGame {
         });
         backButton.setOnAction(event -> {
             scene.setRoot(mainMenu);
+        });
+        retryButton.setOnAction(event -> {
+            paragraph = "The quick brown fox jumped over the lazy dog.";
+            paragraphBox.setText(paragraph);
+            userInputField.clear();
         });
     }
     public void gameLoop(char userInputChar) {

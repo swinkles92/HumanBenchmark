@@ -52,8 +52,10 @@ public class SequenceMemoryGame {
         scoreLabel = new Label("Score: " + score);
         scoreLabel.setFont(new Font(40));
         scoreLabel.setAlignment(Pos.CENTER);
+        Button retryButton = new Button("Retry");
         gameVBox.setAlignment(Pos.CENTER);
-        gameVBox.getChildren().addAll(scoreLabel, gameBoard, backButton);
+        gameVBox.getChildren().addAll(scoreLabel, gameBoard,
+                retryButton, backButton);
         gameScreen.setCenter(gameVBox);
 
         backButton.setOnAction(event -> {
@@ -61,6 +63,11 @@ public class SequenceMemoryGame {
         });
         startBtn.setOnAction(event -> {
             scene.setRoot(gameScreen);
+            gameLoop();
+        });
+        retryButton.setOnAction(event -> {
+            score = 0;
+            scoreLabel.setText("Score: " + score);
             gameLoop();
         });
     }
@@ -96,6 +103,7 @@ public class SequenceMemoryGame {
                     else scoreLabel.setText("Game over!");
                 }
             });
+            rect.setMouseTransparent(true);
             rectList.add(rect);
             gameBoard.getChildren().add(rect);
         }
@@ -118,7 +126,9 @@ public class SequenceMemoryGame {
                 new KeyFrame(Duration.seconds(1.5 - 0.001),
                         new KeyValue(rectList.get(curr).fillProperty(), Color.DARKRED)),
                 new KeyFrame(Duration.seconds(1.5),
-                        new KeyValue(rectList.get(curr).fillProperty(), Color.DIMGREY))
+                        new KeyValue(rectList.get(curr).fillProperty(), Color.DIMGREY)),
+                new KeyFrame(Duration.seconds(1.5),
+                        new KeyValue(rectList.get(curr).mouseTransparentProperty(), false))
         );
         return t;
     }

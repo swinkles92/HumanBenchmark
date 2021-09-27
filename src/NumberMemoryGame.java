@@ -60,14 +60,19 @@ public class NumberMemoryGame {
                     Integer.parseInt(textField.getText()));
             textField.clear();
         });
-        gameVBox.getChildren().addAll( numberLabel, textField, submitBtn, backButton);
+        Button retryButton = new Button("Retry");
+        gameVBox.getChildren().addAll( numberLabel, textField, submitBtn,
+                retryButton, backButton);
         gameVBox.setAlignment(Pos.CENTER);
         gameScreen.setCenter(gameVBox);
         startButton.setOnAction(event -> {
             scene.setRoot(gameScreen);
             currNum = gameLoop(numberLabel, 0, 0);
         });
-
+        retryButton.setOnAction(event -> {
+            currPow10 = 0;
+            currNum = gameLoop(numberLabel, 0, 0);
+        });
     }
     public int generateNum() {
         return ThreadLocalRandom.current().nextInt(
