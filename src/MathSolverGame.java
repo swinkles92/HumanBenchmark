@@ -9,7 +9,6 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MathSolverGame {
@@ -67,7 +66,7 @@ public class MathSolverGame {
             }
             else {
                 gameStartFlag = true;
-                calculate(livesLabel, scoreLabel, opLabel, 0);
+                calculate(livesLabel, scoreLabel, opLabel, Integer.parseInt(textField.getText()));
                 gameLoop(xLabel, yLabel, opLabel);
             }
         });
@@ -77,16 +76,25 @@ public class MathSolverGame {
             scene.setRoot(mainMenu);
         });
 
+        Button retryButton = new Button("Retry");
+        retryButton.setOnAction(event -> {
+            lives = 3;
+            score = 0;
+            numLimit = 1;
+            scoreLabel.setText("Score: " + score);
+            livesLabel.setText("Lives: " + lives);
+            gameLoop(xLabel, yLabel, opLabel);
+        });
         vBox.getChildren().addAll(mathSolverTitle, gameDesc, eqHBox,
-                gameInfoHbox, submitBtn, backButton);
+                gameInfoHbox, submitBtn, retryButton, backButton);
         vBox.setAlignment(Pos.CENTER);
         root.setCenter(vBox);
     }
     public void gameLoop(Label xLabel, Label yLabel, Label opLabel) {
         numLimit++;
 
-        x = ThreadLocalRandom.current().nextInt(1, numLimit);
-        y = ThreadLocalRandom.current().nextInt(1, numLimit);
+        x = ThreadLocalRandom.current().nextInt(1, (int)Math.pow(2, numLimit));
+        y = ThreadLocalRandom.current().nextInt(1, (int)Math.pow(2, numLimit));
         xLabel.setText(Integer.toString(x));
         yLabel.setText(Integer.toString(y));
         int opInt = ThreadLocalRandom.current().nextInt(4);
@@ -98,6 +106,8 @@ public class MathSolverGame {
             case 2: opLabel.setText("/");
                     break;
             case 3: opLabel.setText("*");
+                    break;
+            case 4: opLabel.setText("%");
                     break;
             }
 
@@ -136,6 +146,16 @@ public class MathSolverGame {
                 break;
             case "*":
                 if(x * y == answer) {
+                    score++;
+                    scoreLabel.setText("Score: " + score);
+                }
+                else {
+                    lives--;
+                    livesLabel.setText("Lives: " + lives);
+                }
+                break;
+            case "%":
+                if(x % y == answer) {
                     score++;
                     scoreLabel.setText("Score: " + score);
                 }

@@ -55,8 +55,10 @@ public class ChimpTestGame {
         scoreLabel = new Label("Score: " + score);
         scoreLabel.setFont(new Font(40));
         scoreLabel.setAlignment(Pos.CENTER);
+        Button retryButton = new Button("Retry");
         gameVBox.setAlignment(Pos.CENTER);
-        gameVBox.getChildren().addAll(scoreLabel, gameBoard, backButton);
+        gameVBox.getChildren().addAll(scoreLabel, gameBoard,
+                retryButton, backButton);
         gameScreen.setCenter(gameVBox);
 
         startButton.setOnAction(event -> {
@@ -65,6 +67,11 @@ public class ChimpTestGame {
         });
         backButton.setOnAction(event -> {
             scene.setRoot(mainMenu);
+        });
+        retryButton.setOnAction(event -> {
+            score = 0;
+            scoreLabel.setText("Score: " + score);
+            gameLoop();
         });
     }
     public TilePane generateBoard(int SIZE) {
