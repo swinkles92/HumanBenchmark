@@ -14,7 +14,7 @@ public class AimTrainerGame {
     private final BorderPane startScreen;
     private final Pane gameBoard;
     private long timeElapsed;
-    private int counter;
+    private int counter = 0;
 
     public AimTrainerGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
@@ -64,7 +64,6 @@ public class AimTrainerGame {
         int y = ThreadLocalRandom.current().nextInt(100, SIZE - 150);
         StackPane stackPane = generateTarget(SIZE);
         stackPane.relocate(x, y);
-        System.out.println(counter);
         gameBoard.getChildren().add(stackPane);
     }
     public StackPane generateTarget(int SIZE) {
@@ -87,7 +86,7 @@ public class AimTrainerGame {
         targetPane.getChildren().add(inner);
 
         targetPane.setOnMouseClicked(event -> {
-            if(counter <= 30) {
+            if(counter < 30) {
                 counter++;
                 targetPane.setOpacity(0);
                 targetPane.setMouseTransparent(true);
