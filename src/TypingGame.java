@@ -4,7 +4,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -17,8 +16,9 @@ public class TypingGame {
     private String paragraph = "The quick brown fox jumped over the lazy dog.";
     private Text paragraphBox;
     private int counter = 0;
+    private long elapsedTime = 0;
 
-    public TypingGame(Scene scene, int SIZE, TilePane mainMenu) {
+    public TypingGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
         gameScreen = new BorderPane();
@@ -57,6 +57,7 @@ public class TypingGame {
         });
         startButton.setOnAction(event -> {
             scene.setRoot(gameScreen);
+            elapsedTime = System.currentTimeMillis();
         });
         backButton.setOnAction(event -> {
             scene.setRoot(mainMenu);
@@ -71,12 +72,21 @@ public class TypingGame {
         char currChar = paragraph.charAt(0);
         if(currChar == userInputChar) {
             paragraph = paragraph.substring(1);
+            if(paragraph.equals("")) {
+                elapsedTime = System.currentTimeMillis() - elapsedTime;
+                paragraphBox.setText("Your time was: " + elapsedTime + " ms");
+            }
+            else {
+                paragraphBox.setFill(Color.BLACK);
+                paragraphBox.setText(paragraph);
+            }
             paragraphBox.setFill(Color.BLACK);
         }
         else {
             paragraphBox.setFill(Color.DARKRED);
+            paragraphBox.setText(paragraph);
         }
-        paragraphBox.setText(paragraph);
     }
     public void show() { scene.setRoot(startScreen); }
+    public long getScore() { return elapsedTime; }
 }

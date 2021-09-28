@@ -22,7 +22,7 @@ public class ReactionTimeGame {
     private long reactionTime;
     private long startTime;
 
-    public ReactionTimeGame(Scene scene, int SIZE, TilePane mainMenu) {
+    public ReactionTimeGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         root = new BorderPane();
 
@@ -81,4 +81,7 @@ public class ReactionTimeGame {
         return clickTime;
     }
     public void show() { scene.setRoot(root); }
+    public long getScore() {
+        return reactionTime;
+    }
 }

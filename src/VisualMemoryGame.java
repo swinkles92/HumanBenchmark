@@ -27,7 +27,7 @@ public class VisualMemoryGame {
     private int score = 0;
     private Label scoreLabel = new Label();
 
-    public VisualMemoryGame(Scene scene, int SIZE, TilePane mainMenu) {
+    public VisualMemoryGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
         gameScreen = new BorderPane();
@@ -144,4 +144,7 @@ public class VisualMemoryGame {
         }
     }
     public void show() { scene.setRoot(startScreen); }
+    public int getScore() {
+        return score;
+    }
 }

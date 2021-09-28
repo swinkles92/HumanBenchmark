@@ -31,7 +31,7 @@ public class VerbalMemoryGame {
     private ArrayList<String> seenWordsList = new ArrayList<>();
 
 
-    public VerbalMemoryGame(Scene scene, TilePane mainMenu) {
+    public VerbalMemoryGame(Scene scene, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
         gameScreen = new BorderPane();
@@ -134,4 +134,7 @@ public class VerbalMemoryGame {
         }
     }
     public void show() { scene.setRoot(startScreen); }
+    public int getScore() {
+        return score;
+    }
 }

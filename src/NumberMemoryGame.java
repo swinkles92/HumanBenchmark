@@ -22,7 +22,7 @@ public class NumberMemoryGame {
     private int currPow10 = 0;
     private int currNum;
 
-    public NumberMemoryGame(Scene scene, TilePane mainMenu) {
+    public NumberMemoryGame(Scene scene, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
         gameScreen = new BorderPane();
@@ -94,4 +94,7 @@ public class NumberMemoryGame {
         return currNum;
     }
     public void show() { scene.setRoot(startScreen); }
+    public int getScore() {
+        return currPow10;
+    }
 }

@@ -26,7 +26,7 @@ public class SequenceMemoryGame {
     private int score = 0;
     private Label scoreLabel = new Label();
 
-    public SequenceMemoryGame(Scene scene, int SIZE, TilePane mainMenu) {
+    public SequenceMemoryGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
         gameScreen = new BorderPane();
@@ -146,4 +146,7 @@ public class SequenceMemoryGame {
         }
     }
     public void show() { scene.setRoot(startScreen); }
+    public int getScore() {
+        return score;
+    }
 }

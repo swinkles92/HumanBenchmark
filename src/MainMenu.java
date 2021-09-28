@@ -19,14 +19,23 @@ public class MainMenu {
     private final TilePane root;
 
     private int reactionTimeScore = 0;
+    private ReactionTimeGame reactionTimeGame;
     private int sequenceMemoryScore = 0;
+    private SequenceMemoryGame sequenceMemoryGame;
     private int aimTrainerScore = 0;
+    private AimTrainerGame aimTrainerGame;
     private int numberMemoryScore = 0;
+    private NumberMemoryGame numberMemoryGame;
     private int verbalMemoryScore = 0;
+    private VerbalMemoryGame verbalMemoryGame;
     private int chimpTestScore = 0;
+    private ChimpTestGame chimpTestGame;
     private int visualMemoryScore = 0;
+    private VisualMemoryGame visualMemoryGame;
     private int typingScore = 0;
+    private TypingGame typingGame;
     private  int mathSolverScore = 0;
+    private MathSolverGame mathSolverGame;
 
     public MainMenu(Scene scene, int SIZE) {
         this.scene = scene;
@@ -41,7 +50,7 @@ public class MainMenu {
         reactionTime.setTextAlignment(TextAlignment.CENTER);
         reactionTime.setPrefSize(SIZE / 7, SIZE / 7);
         reactionTime.setOnAction(event -> {
-            ReactionTimeGame reactionTimeGame = new ReactionTimeGame(scene, SIZE, root);
+            ReactionTimeGame reactionTimeGame = new ReactionTimeGame(scene, SIZE, mainScreen);
             reactionTimeGame.show();
         });
         Text reactionTimeDesc = new Text("Test your visual and " +
@@ -61,7 +70,7 @@ public class MainMenu {
         sequenceMemory.setTextAlignment(TextAlignment.CENTER);
         sequenceMemory.setPrefSize(SIZE / 7, SIZE / 7);
         sequenceMemory.setOnAction(event -> {
-            SequenceMemoryGame sequenceMemoryGame = new SequenceMemoryGame(scene, SIZE, root);
+            SequenceMemoryGame sequenceMemoryGame = new SequenceMemoryGame(scene, SIZE, mainScreen);
             sequenceMemoryGame.show();
         });
         Text sequenceMemoryDesc = new Text("Remember an increasing " +
@@ -81,7 +90,7 @@ public class MainMenu {
         aimTrainer.setTextAlignment(TextAlignment.CENTER);
         aimTrainer.setPrefSize(SIZE / 7, SIZE / 7);
         aimTrainer.setOnAction(event -> {
-            AimTrainerGame aimTrainerGame = new AimTrainerGame(scene, SIZE, root);
+            AimTrainerGame aimTrainerGame = new AimTrainerGame(scene, SIZE, mainScreen);
             aimTrainerGame.show();
         });
         Text aimTrainerDesc = new Text("How quickly can you hit all the targets?");
@@ -100,7 +109,7 @@ public class MainMenu {
         numberMemory.setTextAlignment(TextAlignment.CENTER);
         numberMemory.setPrefSize(SIZE / 7, SIZE / 7);
         numberMemory.setOnAction(event -> {
-            NumberMemoryGame numberMemoryGame = new NumberMemoryGame(scene, root);
+            NumberMemoryGame numberMemoryGame = new NumberMemoryGame(scene, mainScreen);
             numberMemoryGame.show();
         });
         Text numberMemoryDesc = new Text("Remember the longest number" +
@@ -121,7 +130,7 @@ public class MainMenu {
         verbalMemory.setTextAlignment(TextAlignment.CENTER);
         verbalMemory.setPrefSize(SIZE / 7, SIZE / 7);
         verbalMemory.setOnAction(event -> {
-            VerbalMemoryGame verbalMemoryGame = new VerbalMemoryGame(scene, root);
+            VerbalMemoryGame verbalMemoryGame = new VerbalMemoryGame(scene, mainScreen);
             verbalMemoryGame.show();
         });
         Text verbalMemoryDesc = new Text("Keep as many words in memory " +
@@ -141,7 +150,7 @@ public class MainMenu {
         chimpTest.setTextAlignment(TextAlignment.CENTER);
         chimpTest.setPrefSize(SIZE / 7, SIZE / 7);
         chimpTest.setOnAction(event -> {
-            ChimpTestGame chimpTestGame = new ChimpTestGame(scene, SIZE, root);
+            ChimpTestGame chimpTestGame = new ChimpTestGame(scene, SIZE, mainScreen);
             chimpTestGame.show();
         });
         Text chimpTestDesc = new Text("Are you smarter than a chimpanzee?");
@@ -160,7 +169,7 @@ public class MainMenu {
         visualMemory.setTextAlignment(TextAlignment.CENTER);
         visualMemory.setPrefSize(SIZE / 7, SIZE / 7);
         visualMemory.setOnAction(event -> {
-            VisualMemoryGame visualMemoryGame = new VisualMemoryGame(scene, SIZE, root);
+            VisualMemoryGame visualMemoryGame = new VisualMemoryGame(scene, SIZE, mainScreen);
             visualMemoryGame.show();
         });
         Text visualMemoryDesc = new Text("Remember an increasingly large" +
@@ -180,7 +189,7 @@ public class MainMenu {
         typing.setTextAlignment(TextAlignment.CENTER);
         typing.setPrefSize(SIZE / 7, SIZE / 7);
         typing.setOnAction(event -> {
-            TypingGame typingGame = new TypingGame(scene, SIZE, root);
+            TypingGame typingGame = new TypingGame(scene, SIZE, mainScreen);
             typingGame.show();
         });
         Text typingDesc = new Text("How many words per minute can you type?");
@@ -199,7 +208,7 @@ public class MainMenu {
         mathSolver.setTextAlignment(TextAlignment.CENTER);
         mathSolver.setPrefSize(SIZE / 7, SIZE / 7);
         mathSolver.setOnAction(event -> {
-            MathSolverGame mathSolverGame = new MathSolverGame(scene, SIZE, mainScreen);
+            mathSolverGame = new MathSolverGame(scene, SIZE, mainScreen);
             mathSolverGame.show();
         });
         Text mathSolverDesc = new Text("With increasing numbers how many " +
@@ -233,23 +242,32 @@ public class MainMenu {
         public CSVWriter() throws IOException {
             FileWriter csvWriter = new FileWriter("scores.csv");
             csvWriter.append("Name, ");
-            csvWriter.append("Reaction Time, ");
+            csvWriter.append("Reaction Time (ms), ");
             csvWriter.append("Sequence Memory, ");
-            csvWriter.append("Aim Trainer, ");
+            csvWriter.append("Aim Trainer (ms), ");
             csvWriter.append("Number Memory, ");
             csvWriter.append("Verbal Memory, ");
             csvWriter.append("Chimp Test, ");
             csvWriter.append("Visual Memory, ");
-            csvWriter.append("Typing");
+            csvWriter.append("Typing (ms)");
             csvWriter.append("\n");
 
-            csvWriter.append(Integer.toString(mathSolverScore));
+            csvWriter.append(Long.toString(reactionTimeGame.getScore()));
             csvWriter.append(", ");
-            /*(for(Integer rowData : rows) {
-                csvWriter.append(rows.get(0));
-                csvWriter.append("\n");
-
-             */
+            csvWriter.append(Integer.toString(sequenceMemoryGame.getScore()));
+            csvWriter.append(", ");
+            csvWriter.append(Long.toString(aimTrainerGame.getScore()));
+            csvWriter.append(", ");
+            csvWriter.append(Integer.toString(numberMemoryGame.getScore()));
+            csvWriter.append(", ");
+            csvWriter.append(Integer.toString(verbalMemoryGame.getScore()));
+            csvWriter.append(", ");
+            csvWriter.append(Integer.toString(chimpTestGame.getScore()));
+            csvWriter.append(", ");
+            csvWriter.append(Integer.toString(visualMemoryGame.getScore()));
+            csvWriter.append(", ");
+            csvWriter.append(Long.toString(typingGame.getScore()));
+            csvWriter.append(", ");
             csvWriter.flush();
             csvWriter.close();
         }

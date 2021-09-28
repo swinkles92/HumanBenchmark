@@ -5,10 +5,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 public class MathSolverGame {
@@ -167,6 +167,7 @@ public class MathSolverGame {
         }
     }
     public void show() { scene.setRoot(root); }
-    public void getScore() {
+    public int getScore() {
+        return score;
     }
 }

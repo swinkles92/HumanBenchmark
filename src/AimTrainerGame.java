@@ -16,7 +16,7 @@ public class AimTrainerGame {
     private long timeElapsed;
     private int counter;
 
-    public AimTrainerGame(Scene scene, int SIZE, TilePane mainMenu) {
+    public AimTrainerGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
         gameBoard = new Pane();
@@ -106,4 +106,7 @@ public class AimTrainerGame {
         return targetPane;
     }
     public void show() { scene.setRoot(startScreen); }
+    public long getScore() {
+        return timeElapsed;
+    }
 }
