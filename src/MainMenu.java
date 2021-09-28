@@ -1,6 +1,7 @@
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -9,13 +10,28 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class MainMenu {
     private final Scene scene;
+    private final BorderPane mainScreen;
     private final TilePane root;
+
+    private int reactionTimeScore = 0;
+    private int sequenceMemoryScore = 0;
+    private int aimTrainerScore = 0;
+    private int numberMemoryScore = 0;
+    private int verbalMemoryScore = 0;
+    private int chimpTestScore = 0;
+    private int visualMemoryScore = 0;
+    private int typingScore = 0;
+    private  int mathSolverScore = 0;
 
     public MainMenu(Scene scene, int SIZE) {
         this.scene = scene;
         root = new TilePane();
+        mainScreen = new BorderPane();
 
         Rectangle reactionTimeRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
         reactionTimeRect.setFill(Color.LIGHTBLUE);
@@ -183,7 +199,7 @@ public class MainMenu {
         mathSolver.setTextAlignment(TextAlignment.CENTER);
         mathSolver.setPrefSize(SIZE / 7, SIZE / 7);
         mathSolver.setOnAction(event -> {
-            MathSolverGame mathSolverGame = new MathSolverGame(scene, SIZE, root);
+            MathSolverGame mathSolverGame = new MathSolverGame(scene, SIZE, mainScreen);
             mathSolverGame.show();
         });
         Text mathSolverDesc = new Text("With increasing numbers how many " +
@@ -199,6 +215,43 @@ public class MainMenu {
         root.setHgap(10);
         root.setVgap(10);
 
+        Button saveScoreBtn = new Button("Save Scores");
+        saveScoreBtn.setOnAction(event -> {
+            try {
+                CSVWriter csvw = new CSVWriter();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        saveScoreBtn.setAlignment(Pos.TOP_CENTER);
+        mainScreen.setTop(saveScoreBtn);
+        mainScreen.setCenter(root);
+
     }
-    public void show() { scene.setRoot(root); }
+    public void show() { scene.setRoot(mainScreen); }
+    public class CSVWriter {
+        public CSVWriter() throws IOException {
+            FileWriter csvWriter = new FileWriter("scores.csv");
+            csvWriter.append("Name, ");
+            csvWriter.append("Reaction Time, ");
+            csvWriter.append("Sequence Memory, ");
+            csvWriter.append("Aim Trainer, ");
+            csvWriter.append("Number Memory, ");
+            csvWriter.append("Verbal Memory, ");
+            csvWriter.append("Chimp Test, ");
+            csvWriter.append("Visual Memory, ");
+            csvWriter.append("Typing");
+            csvWriter.append("\n");
+
+            csvWriter.append(Integer.toString(mathSolverScore));
+            csvWriter.append(", ");
+            /*(for(Integer rowData : rows) {
+                csvWriter.append(rows.get(0));
+                csvWriter.append("\n");
+
+             */
+            csvWriter.flush();
+            csvWriter.close();
+        }
+    }
 }

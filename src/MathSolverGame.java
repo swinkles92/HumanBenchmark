@@ -22,7 +22,7 @@ public class MathSolverGame {
     private int lives = 3;
     private int score = 0;
 
-    public MathSolverGame(Scene scene, int SIZE, TilePane mainMenu) {
+    public MathSolverGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         root = new BorderPane();
 
@@ -167,4 +167,6 @@ public class MathSolverGame {
         }
     }
     public void show() { scene.setRoot(root); }
+    public void getScore() {
+    }
 }
