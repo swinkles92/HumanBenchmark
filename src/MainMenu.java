@@ -1,15 +1,13 @@
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -18,6 +16,7 @@ public class MainMenu {
     private final BorderPane mainScreen;
     private final TilePane root;
 
+    //Instantiate game objects for later use
     private ReactionTimeGame reactionTimeGame;
     private SequenceMemoryGame sequenceMemoryGame;
     private AimTrainerGame aimTrainerGame;
@@ -27,12 +26,14 @@ public class MainMenu {
     private VisualMemoryGame visualMemoryGame;
     private TypingGame typingGame;
     private MathSolverGame mathSolverGame;
+    private TextField nameField;
 
     public MainMenu(Scene scene, int SIZE) {
         this.scene = scene;
         root = new TilePane();
         mainScreen = new BorderPane();
 
+        //All necessary labels, buttons, and shapes for Reaction Time Game
         Rectangle reactionTimeRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
         reactionTimeRect.setFill(Color.LIGHTBLUE);
         StackPane reactionTimePane = new StackPane();
@@ -53,6 +54,7 @@ public class MainMenu {
         reactionTimePane.getChildren().addAll(reactionTimeRect, reactionTimeVbox);
         root.getChildren().add(reactionTimePane);
 
+        //All necessary labels, buttons, and shapes for Sequence Memory Game
         Rectangle sequenceMemoryRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
         sequenceMemoryRect.setFill(Color.LIGHTBLUE);
         StackPane sequenceMemoryPane = new StackPane();
@@ -73,6 +75,7 @@ public class MainMenu {
         sequenceMemoryPane.getChildren().addAll(sequenceMemoryRect, sequenceMemoryVbox);
         root.getChildren().add(sequenceMemoryPane);
 
+        //All necessary labels, buttons, and shapes for Aim Trainer Game
         Rectangle aimTrainerRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
         aimTrainerRect.setFill(Color.LIGHTBLUE);
         StackPane aimTrainerPane = new StackPane();
@@ -92,6 +95,7 @@ public class MainMenu {
         aimTrainerPane.getChildren().addAll(aimTrainerRect, aimTrainerVbox);
         root.getChildren().add(aimTrainerPane);
 
+        //All necessary labels, buttons, and shapes for Number Memory Game
         Rectangle numberMemoryRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
         numberMemoryRect.setFill(Color.LIGHTBLUE);
         StackPane numberMemoryPane = new StackPane();
@@ -112,7 +116,7 @@ public class MainMenu {
         numberMemoryPane.getChildren().addAll(numberMemoryRect, numberMemoryVbox);
         root.getChildren().add(numberMemoryPane);
 
-
+        //All necessary labels, buttons, and shapes for Verbal Memory Game
         Rectangle verbalMemoryRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
         verbalMemoryRect.setFill(Color.LIGHTBLUE);
         StackPane verbalMemoryPane = new StackPane();
@@ -133,6 +137,7 @@ public class MainMenu {
         verbalMemoryPane.getChildren().addAll(verbalMemoryRect, verbalMemoryVbox);
         root.getChildren().add(verbalMemoryPane);
 
+        //All necessary labels, buttons, and shapes for Chimp Test Game
         Rectangle chimpTestRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
         chimpTestRect.setFill(Color.LIGHTBLUE);
         StackPane chimpTestPane = new StackPane();
@@ -152,6 +157,7 @@ public class MainMenu {
         chimpTestPane.getChildren().addAll(chimpTestRect, chimpTestVbox);
         root.getChildren().add(chimpTestPane);
 
+        //All necessary labels, buttons, and shapes for Visual Memory Game
         Rectangle visualMemoryRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
         visualMemoryRect.setFill(Color.LIGHTBLUE);
         StackPane visualMemoryPane = new StackPane();
@@ -172,6 +178,7 @@ public class MainMenu {
         visualMemoryPane.getChildren().addAll(visualMemoryRect, visualMemoryVbox);
         root.getChildren().add(visualMemoryPane);
 
+        //All necessary labels, buttons, and shapes for Typing Game
         Rectangle typingRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
         typingRect.setFill(Color.LIGHTBLUE);
         StackPane typingPane = new StackPane();
@@ -191,6 +198,7 @@ public class MainMenu {
         typingPane.getChildren().addAll(typingRect, typingVbox);
         root.getChildren().add(typingPane);
 
+        //All necessary labels, buttons, and shapes for Math Solver Game
         Rectangle mathSolverRect = new Rectangle(SIZE / 3.5, SIZE / 3.5);
         mathSolverRect.setFill(Color.LIGHTBLUE);
         StackPane mathSolverPane = new StackPane();
@@ -215,6 +223,11 @@ public class MainMenu {
         root.setHgap(10);
         root.setVgap(10);
 
+        //Labels and fields for CSV writing functionality
+        HBox topHBox = new HBox(10);
+        Label nameLabel = new Label("Name: ");
+        nameField = new TextField();
+        nameField.setMaxWidth(200);
         Button saveScoreBtn = new Button("Save Scores");
         saveScoreBtn.setOnAction(event -> {
             try {
@@ -223,8 +236,9 @@ public class MainMenu {
                 e.printStackTrace();
             }
         });
-        saveScoreBtn.setAlignment(Pos.TOP_CENTER);
-        mainScreen.setTop(saveScoreBtn);
+        topHBox.getChildren().addAll(nameLabel, nameField, saveScoreBtn);
+        topHBox.setAlignment(Pos.CENTER);
+        mainScreen.setTop(topHBox);
         mainScreen.setCenter(root);
 
     }
@@ -244,6 +258,14 @@ public class MainMenu {
             csvWriter.append("Math Solver");
             csvWriter.append("\n");
 
+            if (!nameField.getText().isEmpty()) {
+                csvWriter.append(nameField.getText());
+                csvWriter.append(", ");
+            }
+            else {
+                csvWriter.append("No Name");
+                csvWriter.append(", ");
+            }
             if (reactionTimeGame != null) {
                 csvWriter.append(Long.toString(reactionTimeGame.getScore()));
                 csvWriter.append(", ");

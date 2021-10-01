@@ -26,6 +26,11 @@ public class SequenceMemoryGame {
     private int score = 0;
     private Label scoreLabel = new Label();
 
+    /**
+     Input: Scene variable to transition to,
+     SIZE variable for window/shape creation,
+     Pane variable for main menu to go back to
+     */
     public SequenceMemoryGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
@@ -71,6 +76,14 @@ public class SequenceMemoryGame {
             gameLoop();
         });
     }
+    /*
+    Generates game board of 9 rectangles. Adds
+    action listeners to each with action listeners
+    that check if said rectangle is part of the
+    generated game sequence, flashing green if it is.
+    Also continues game loop if all game sequence nodes
+    have been found and clicked.
+     */
     public TilePane generateBoard(int SIZE) {
         TilePane gameBoard = new TilePane();
         gameBoard.setAlignment(Pos.CENTER);
@@ -109,6 +122,11 @@ public class SequenceMemoryGame {
         }
         return gameBoard;
     }
+    /*
+    Clears any existing elements in game sequence list,
+    generates a new sequence, and assigns the timeline animations
+    to the necessary rectangles
+     */
     public void gameLoop() {
         gameSequence.clear();
         generateSequence();
@@ -119,6 +137,9 @@ public class SequenceMemoryGame {
             t.play();
         }
     }
+    /*
+    Flashes the rectangle that is part of the generated game sequence
+     */
     public Timeline playAnimation(int curr) {
         Timeline t = new Timeline(
                 new KeyFrame(Duration.seconds(0),
@@ -132,6 +153,9 @@ public class SequenceMemoryGame {
         );
         return t;
     }
+    /*
+    Generates a sequence of numbers used for rectangle indexing
+     */
     public void generateSequence() {
         int rand;
         for(int i = 0; i < score + 1; i++) {
@@ -145,7 +169,9 @@ public class SequenceMemoryGame {
             else gameSequence.push(rand);
         }
     }
+    // Transfers focus from main menu to game
     public void show() { scene.setRoot(startScreen); }
+    // Used for CSV writing
     public int getScore() {
         return score;
     }

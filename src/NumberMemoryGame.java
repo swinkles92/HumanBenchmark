@@ -21,6 +21,10 @@ public class NumberMemoryGame {
     private int currPow10 = 0;
     private int currNum;
 
+    /**
+     Input: Scene variable to transition to,
+     Pane variable for main menu to go back to
+     */
     public NumberMemoryGame(Scene scene, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
@@ -73,11 +77,15 @@ public class NumberMemoryGame {
             currNum = gameLoop(numberLabel, 0, 0);
         });
     }
+    // Generates new number based on current power of 10
     public int generateNum() {
         return ThreadLocalRandom.current().nextInt(
                 1 * (int)Math.pow(10,currPow10),
                 10 * (int)Math.pow(10,currPow10));
     }
+    // Compares user input with current, correct number
+    // If user is correct, new number is generated and
+    // animation timeline is used to flash number
     public int gameLoop(Label numberLabel, int currNum, int userInput) {
         if(currNum == userInput) {
             currNum = generateNum();
@@ -92,7 +100,9 @@ public class NumberMemoryGame {
         else numberLabel.setText("Game Over!");
         return currNum;
     }
+    // Transfers focus from main menu to game
     public void show() { scene.setRoot(startScreen); }
+    // Used for CSV writing
     public int getScore() {
         return currPow10;
     }

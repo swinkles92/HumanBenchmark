@@ -22,6 +22,11 @@ public class MathSolverGame {
     private int lives = 3;
     private int score = 0;
 
+    /**
+     Input: Scene variable to transition to,
+     SIZE variable for window creation,
+     Pane variable for main menu to go back to
+     */
     public MathSolverGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         root = new BorderPane();
@@ -90,6 +95,9 @@ public class MathSolverGame {
         vBox.setAlignment(Pos.CENTER);
         root.setCenter(vBox);
     }
+    /*
+    Generates random numbers and a random operation for the equation
+     */
     public void gameLoop(Label xLabel, Label yLabel, Label opLabel) {
         numLimit++;
 
@@ -112,6 +120,10 @@ public class MathSolverGame {
             }
 
     }
+    /*
+    Parses answers and arithmetic operator to calculate
+    coorect result. Tests user input for correctness.
+     */
     public void calculate(Label livesLabel, Label scoreLabel, Label opLabel, int answer) {
         switch (opLabel.getText()) {
             case "+":
@@ -166,7 +178,9 @@ public class MathSolverGame {
                 break;
         }
     }
+    // Transfers focus from main menu to game
     public void show() { scene.setRoot(root); }
+    // Used for CSV writing
     public int getScore() {
         return score;
     }

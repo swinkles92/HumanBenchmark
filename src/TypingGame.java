@@ -18,6 +18,11 @@ public class TypingGame {
     private int counter = 0;
     private long elapsedTime = 0;
 
+    /**
+     Input: Scene variable to transition to,
+     SIZE variable for window/shape creation,
+     Pane variable for main menu to go back to
+     */
     public TypingGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
@@ -68,6 +73,12 @@ public class TypingGame {
             userInputField.clear();
         });
     }
+    /*
+    Compares user input with first char of paragraph string.
+    If input is correct, removes first element of paragraph
+    string and updates respective labels. If not, then text is
+    turned red to show error.
+     */
     public void gameLoop(char userInputChar) {
         char currChar = paragraph.charAt(0);
         if(currChar == userInputChar) {
@@ -87,6 +98,8 @@ public class TypingGame {
             paragraphBox.setText(paragraph);
         }
     }
+    // Transfers focus from main menu to game
     public void show() { scene.setRoot(startScreen); }
+    // Used for CSV writing
     public long getScore() { return elapsedTime; }
 }

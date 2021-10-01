@@ -27,6 +27,11 @@ public class VisualMemoryGame {
     private int score = 0;
     private Label scoreLabel = new Label();
 
+    /**
+     Input: Scene variable to transition to,
+     SIZE variable for window/shape creation,
+     Pane variable for main menu to go back to
+     */
     public VisualMemoryGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
@@ -73,6 +78,12 @@ public class VisualMemoryGame {
         });
 
     }
+    /*
+    Generates board of 20 rectangles, assigns
+    event listeners to each rectangle that
+    checks if clicked rectangle is part of correct
+    sequence.
+     */
     public TilePane generateBoard(int SIZE) {
         TilePane gameBoard = new TilePane();
         gameBoard.setAlignment(Pos.CENTER);
@@ -110,6 +121,11 @@ public class VisualMemoryGame {
         }
         return gameBoard;
     }
+    /*
+    Clears any existing elements out of game sequence,
+    generates a new one, and assigns the timeline animation
+    to the necessary rectangles
+     */
     public void gameLoop() {
         gameSequence.clear();
         generateSequence();
@@ -119,6 +135,10 @@ public class VisualMemoryGame {
             t.play();
         }
     }
+    /*
+    Timeline animation for flashing rectangles
+    that are part of game sequence
+     */
     public Timeline playAnimation(int curr) {
         Timeline t = new Timeline(
                 new KeyFrame(Duration.seconds(0),
@@ -130,6 +150,9 @@ public class VisualMemoryGame {
         );
         return t;
     }
+    /*
+    Generates a set of integers used for rectangle indexing
+     */
     public void generateSequence() {
         int rand;
         for(int i = 0; i < score + 1; i++) {
@@ -143,7 +166,9 @@ public class VisualMemoryGame {
             else gameSequence.push(rand);
         }
     }
+    // Transfers focus from main menu to game
     public void show() { scene.setRoot(startScreen); }
+    // Used for CSV writing
     public int getScore() {
         return score;
     }

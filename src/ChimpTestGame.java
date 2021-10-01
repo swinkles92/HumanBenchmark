@@ -20,6 +20,7 @@ import javafx.util.Duration;
 import java.util.LinkedList;
 import java.util.concurrent.ThreadLocalRandom;
 
+
 public class ChimpTestGame {
     private final Scene scene;
     private final BorderPane startScreen;
@@ -31,12 +32,18 @@ public class ChimpTestGame {
     private int score = 0;
     private Label scoreLabel = new Label();
 
+    /**
+     * Input: Scene variable to transition to,
+     * SIZE variable for window/shape creation,
+     * Pane variable for main menu to go back to
+     */
     public ChimpTestGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
         gameScreen = new BorderPane();
         gameBoard = generateBoard(SIZE);
 
+        //Start screen labels, game description, and buttons
         VBox startVbox = new VBox(10);
         Label title = new Label("Chimp Test");
         title.setFont(new Font(40));
@@ -51,6 +58,7 @@ public class ChimpTestGame {
         startVbox.setAlignment(Pos.CENTER);
         startScreen.setCenter(startVbox);
 
+        // Necessary labels and buttons for gameplay
         VBox gameVBox = new VBox(25);
         scoreLabel = new Label("Score: " + score);
         scoreLabel.setFont(new Font(40));
@@ -74,6 +82,10 @@ public class ChimpTestGame {
             gameLoop();
         });
     }
+    // Creates the 18 rectangles necessary for gameplay
+    // and adds them to rectList linked list.
+    // Also provides logic for gameplay to see if
+    // clicked rectangle is part of the generated sequence
     public TilePane generateBoard(int SIZE) {
         TilePane gameBoard = new TilePane();
         gameBoard.setAlignment(Pos.CENTER);
@@ -109,6 +121,11 @@ public class ChimpTestGame {
         }
         return gameBoard;
     }
+    /*
+    Clears the game sequence after each full game cycle,
+    generates a new cycle, and assigns the timeline
+    animation to selected rectangles
+     */
     public void gameLoop() {
         gameSequence.clear();
         generateSequence();
@@ -119,6 +136,9 @@ public class ChimpTestGame {
             t.play();
         }
     }
+    /*
+    Creates the animation necessary for gameplay
+     */
     public Timeline playAnimation(int curr) {
         Timeline t = new Timeline(
                 new KeyFrame(Duration.seconds(0),
@@ -128,6 +148,7 @@ public class ChimpTestGame {
         );
         return t;
     }
+    // Generates new sequence of random numbers necessary for gameplay
     public void generateSequence() {
         int rand;
         for(int i = 0; i < score + 1; i++) {
@@ -141,7 +162,9 @@ public class ChimpTestGame {
             else gameSequence.push(rand);
         }
     }
+    // Transfers focus from main menu to game
     public void show() { scene.setRoot(startScreen); }
+    // Used for CSV writing
     public int getScore() {
         return score;
     }

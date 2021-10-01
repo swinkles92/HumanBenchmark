@@ -26,11 +26,15 @@ public class VerbalMemoryGame {
     private String currWord;
     private Label scoreLabel;
     private Label currWordLabel;
+    // Path for given dictionary file
     private File wordFile = new File("./resources/dictionary.txt");
     private List wordsList = ParseFile.readFileToList(wordFile.toString());
     private ArrayList<String> seenWordsList = new ArrayList<>();
 
-
+    /**
+     Input: Scene variable to transition to,
+     Pane variable for main menu to go back to
+     */
     public VerbalMemoryGame(Scene scene, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
@@ -92,6 +96,9 @@ public class VerbalMemoryGame {
             currWordLabel.setText(currWord);
         });
     }
+    /*
+    Contains logic for checking if a word is new/seen
+     */
     public void gameLoop(boolean wordSeen) {
         int rand;
         if(wordSeen) {
@@ -121,6 +128,9 @@ public class VerbalMemoryGame {
             }
         }
     }
+    /*
+    Reads in all data from text file and adds words to a list
+     */
     public class ParseFile {
         public static List<String> readFileToList(String fileName) {
             List<String> textLines = Collections.emptyList();
@@ -133,7 +143,9 @@ public class VerbalMemoryGame {
             return textLines;
         }
     }
+    // Transfers focus from main menu to game
     public void show() { scene.setRoot(startScreen); }
+    // Used for CSV writing
     public int getScore() {
         return score;
     }

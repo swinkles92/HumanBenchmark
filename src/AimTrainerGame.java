@@ -16,11 +16,17 @@ public class AimTrainerGame {
     private long timeElapsed;
     private int counter = 0;
 
+    /**
+    Input: Scene variable to transition to,
+           SIZE variable for window/shape creation,
+           Pane variable for main menu to go back to
+     */
     public AimTrainerGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         startScreen = new BorderPane();
         gameBoard = new Pane();
 
+        //Start screen labels, game description, and buttons
         VBox startVBox = new VBox(10);
         Label aimTrainerTitle = new Label("Aim Trainer");
         aimTrainerTitle.setFont(new Font(40));
@@ -48,6 +54,7 @@ public class AimTrainerGame {
             timeElapsed = System.currentTimeMillis();
             gameLoop(SIZE);
         });
+        // Returns focus back to main menu
         backButton.setOnAction(event -> {
             scene.setRoot(mainMenu);
         });
@@ -59,6 +66,8 @@ public class AimTrainerGame {
             gameLoop(SIZE);
         });
     }
+    // Function calculates random x, y values and relocates Aim object
+    // to the location
     public void gameLoop(int SIZE) {
         int x = ThreadLocalRandom.current().nextInt(50, SIZE - 150);
         int y = ThreadLocalRandom.current().nextInt(100, SIZE - 150);
@@ -66,6 +75,9 @@ public class AimTrainerGame {
         stackPane.relocate(x, y);
         gameBoard.getChildren().add(stackPane);
     }
+    // Creates target object and adds action listeners
+    // to increment counter until game is
+    // complete (30 targets clicked)
     public StackPane generateTarget(int SIZE) {
         StackPane targetPane = new StackPane();
 
@@ -104,7 +116,9 @@ public class AimTrainerGame {
 
         return targetPane;
     }
+    // Transfers focus from main menu to game
     public void show() { scene.setRoot(startScreen); }
+    // Used for CSV writing
     public long getScore() {
         return timeElapsed;
     }

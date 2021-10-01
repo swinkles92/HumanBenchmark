@@ -6,13 +6,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -22,6 +22,11 @@ public class ReactionTimeGame {
     private long reactionTime;
     private long startTime;
 
+    /**
+     Input: Scene variable to transition to,
+     SIZE variable for window/shape creation,
+     Pane variable for main menu to go back to
+     */
     public ReactionTimeGame(Scene scene, int SIZE, BorderPane mainMenu) {
         this.scene = scene;
         root = new BorderPane();
@@ -40,6 +45,8 @@ public class ReactionTimeGame {
         rect.setFill(Color.GREEN);
 
         Button startButton = new Button("Start / Retry");
+        // Contains logic for tracking reaction time and
+        // starting/restarting game loop
         startButton.setOnAction(event -> {
             reactionTime = 0;
             reactionTimeLabel.setText("");
@@ -68,6 +75,8 @@ public class ReactionTimeGame {
         vBox.setAlignment(Pos.CENTER);
         root.setCenter(vBox);
     }
+    // Generates a random number used for delay
+    // Uses the randomized delay in timeline animation
     public long gameLoop(Rectangle rect) {
         rect.setFill(Color.RED);
         int rand = ThreadLocalRandom.current().nextInt(1, 4);
@@ -80,7 +89,9 @@ public class ReactionTimeGame {
         long clickTime = System.currentTimeMillis();
         return clickTime;
     }
+    // Transfers focus from main menu to game
     public void show() { scene.setRoot(root); }
+    // Used for CSV writing
     public long getScore() {
         return reactionTime;
     }
